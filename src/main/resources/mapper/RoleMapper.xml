@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.RoleMapper">
+
+    <select id="findRoleByUserName" resultType="com.example.demo.domain.UserRole">
+        SELECT
+            userID,
+            roleName
+        FROM User U, Role R WHERE U.roleID = R.roleID AND userName = #{userName}
+    </select>
+
+    <select id="getAllRoles" resultType="com.example.demo.domain.Role">
+        SELECT
+            roleID,
+            roleName
+        FROM Role
+    </select>
+
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.ClassMapper">
+
+
+    <select id="getAllClass" resultType="com.example.demo.domain.Class">
+        SELECT
+            classID,
+            userID,
+            className,
+            ageGroup,
+            studentCount,
+            createdAt,
+            updatedAt
+        FROM Class
+    </select>
+
+    <select id="getInformationClassByClassID" resultType="com.example.demo.domain.response.AssignClassResponse">
+        SELECT
+            classID,
+            fullName,
+            className,
+            ageGroup,
+            studentCount
+        FROM Class C, User U
+            WHERE C.userID = U.userID AND classID = #{classID}
+    </select>
+
+    <update id="assignClass" parameterType="com.example.demo.domain.response.AssignClassResponse">
+        UPDATE Class
+        SET userID = #{userID}
+        WHERE classID = #{classID}
+    </update>
+
+
+</mapper>

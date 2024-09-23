@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.MenuMapper">
+
+    <insert id="addDishToMenu" parameterType="com.example.demo.domain.request.RequestMenu" >
+        INSERT INTO Menu (userID, scheduleID, dishName, price, serveDate)
+        VALUES (#{userID}, #{scheduleID}, #{dishName}, #{price}, #{serveDate})
+    </insert>
+
+
+    <select id="getMenuByDate" resultType="com.example.demo.domain.response.ResponseMenu">
+        SELECT
+            menuID,
+            userID,
+            scheduleID,
+            dishName,
+            price,
+            serveDate
+        FROM Menu
+            WHERE serveDate = #{serveDate}
+    </select>
+
+    <select id="getMenuByID" resultType="com.example.demo.domain.response.ResponseMenu">
+        SELECT
+            menuID,
+            userID,
+            scheduleID,
+            dishName,
+            price,
+            serveDate
+        FROM Menu
+        WHERE menuID = #{menuID}
+    </select>
+
+</mapper>
