@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.MenuMapper;
+import com.example.demo.dao.UserMapper;
+import com.example.demo.domain.User;
 import com.example.demo.domain.request.RequestMenu;
 import com.example.demo.domain.response.ResponseMenu;
 import com.example.demo.service.interf.MenuService;
@@ -22,10 +24,13 @@ import java.util.List;
 public class MenuImpl implements MenuService {
 
     private final MenuMapper menuMapper;
+    private final UserMapper userMapper;
+
 
     @Override
     public void addDishToMenu(RequestMenu requestMenu) {
-        requestMenu.setServeDate(String.valueOf(LocalDateTime.now()));
+        User user = userMapper.findUserByUserName(requestMenu.getUserName());
+        requestMenu.setUserID(user.getUserID());
         menuMapper.addDishToMenu(requestMenu);
     }
 
