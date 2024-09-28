@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ResponseOrder {
     private int orderID;
-    private int userID;
-    private int menuID;
-    private int classID;
+    private String userName;
+    private String dishName;
+    private String className;
     private int quantity;
     private double totalPrice;
     private String createdAt;

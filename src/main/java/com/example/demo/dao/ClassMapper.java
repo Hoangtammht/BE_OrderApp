@@ -15,4 +15,6 @@ public interface ClassMapper {
 
     void assignClass(int classID, int userID);
 
+    Class getClassByUserID(int userID);
+
 }

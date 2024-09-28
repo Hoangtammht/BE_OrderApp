@@ -13,31 +13,42 @@
     <select id="getOrdersByDateRange" resultType="com.example.demo.domain.response.ResponseOrder">
         SELECT
             orderID,
-            userID,
-            menuID,
-            classID,
-            quantity,
-            totalPrice,
-            createdAt,
-            updatedAt
-        FROM `Order`
-            WHERE DATE(createdAt) BETWEEN #{from} AND #{to}
-    </select>
-
-    <select id="getOrdersByTeacher" resultType="com.example.demo.domain.response.ResponseOrder">
-        SELECT
-            orderID,
-            U.userID,
-            menuID,
-            classID,
+            U.userName,
+            M.dishName,
+            S.className,
             quantity,
             totalPrice,
             O.createdAt,
             O.updatedAt
-        FROM `Order` O
-            JOIN `User` U ON O.userID = U.userID
-        WHERE
-            U.userName  LIKE CONCAT('%', #{userName}, '%')
+        FROM `Order` O, Menu M, User U, Class S
+            WHERE
+        O.userID = u.userID AND O.classID = S.classID AND O.menuID = M.menuID
+        AND DATE(O.createdAt) BETWEEN #{from} AND #{to}
     </select>
+
+    <select id="getOrdersByTeacher" resultType="com.example.demo.domain.response.ResponseOrder">
+        SELECT
+        orderID,
+        U.userName,
+        M.dishName,
+        S.className,
+        quantity,
+        totalPrice,
+        O.createdAt,
+        O.updatedAt
+        FROM
+        `Order` O
+        JOIN
+        Menu M ON O.menuID = M.menuID
+        JOIN
+        User U ON O.userID = U.userID
+        JOIN
+        Class S ON O.classID = S.classID
+        WHERE
+        U.userName LIKE CONCAT('%', #{userName}, '%')
+        ORDER BY
+        O.orderID DESC
+    </select>
+
 
 </mapper>

@@ -18,6 +18,18 @@
         FROM Class
     </select>
 
+    <select id="getClassByUserID" resultType="com.example.demo.domain.Class">
+        SELECT
+        classID,
+        userID,
+        className,
+        ageGroup,
+        studentCount,
+        createdAt,
+        updatedAt
+        FROM Class WHERE userID = #{userID}
+    </select>
+
     <select id="getInformationClassByClassID" resultType="com.example.demo.domain.response.AssignClassResponse">
         SELECT
             classID,

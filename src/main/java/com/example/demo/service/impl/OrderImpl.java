@@ -1,7 +1,11 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dao.ClassMapper;
 import com.example.demo.dao.MenuMapper;
 import com.example.demo.dao.OrderMapper;
+import com.example.demo.dao.UserMapper;
+import com.example.demo.domain.Class;
+import com.example.demo.domain.User;
 import com.example.demo.domain.request.RequestOrder;
 import com.example.demo.domain.response.ResponseMenu;
 import com.example.demo.domain.response.ResponseOrder;
@@ -20,12 +24,17 @@ public class OrderImpl implements OrderService {
 
     private final OrderMapper orderMapper;
     private final MenuMapper menuMapper;
+    private final UserMapper userMapper;
+    private final ClassMapper classMapper;
 
     @Override
     public void createOrder(RequestOrder requestOrder) {
         ResponseMenu dishName = menuMapper.getMenuByID(requestOrder.getMenuID());
+        User user = userMapper.findUserByUserName(requestOrder.getUserName());
+        Class classInfo = classMapper.getClassByUserID(user.getUserID());
+        requestOrder.setUserID(user.getUserID());
+        requestOrder.setClassID(classInfo.getClassID());
         requestOrder.setTotalPrice(dishName.getPrice() * requestOrder.getQuantity());
-        requestOrder.setCreatedAt(String.valueOf(LocalDateTime.now()));
         orderMapper.createOrder(requestOrder);
     }
 

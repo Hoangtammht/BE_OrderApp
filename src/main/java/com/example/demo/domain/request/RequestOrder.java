@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestOrder {
     private int userID;
+    private String userName;
     private int menuID;
     private int classID;
     private int quantity;
     private double totalPrice;
     private String createdAt;
-
-
 }
 
