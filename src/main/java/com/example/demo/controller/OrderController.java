@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.request.RequestOrder;
+import com.example.demo.domain.request.RequestUpdateConfirm;
 import com.example.demo.domain.response.ResponseOrder;
 import com.example.demo.exception.ApiRequestException;
 import com.example.demo.service.interf.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,10 +44,20 @@ public class OrderController {
     }
 
     @GetMapping("/getOrderByTeacherName")
-    public ResponseEntity<?> getOrdersByTeacher(@RequestParam String userName) {
+    public ResponseEntity<?> getOrdersByTeacher() {
         try {
-            List<ResponseOrder> orders = orderService.getOrdersByTeacher(userName);
+            List<ResponseOrder> orders = orderService.getOrdersByTeacher();
             return ResponseEntity.ok(orders);
+        } catch (ApiRequestException e) {
+            throw e;
+        }
+    }
+
+    @PutMapping("/confirmOrder")
+    public ResponseEntity<?> confirmOrder(@RequestBody RequestUpdateConfirm requestUpdateConfirm) {
+        try {
+            orderService.confirmOrder(requestUpdateConfirm);
+            return ResponseEntity.ok().body("Updated confirm order successfully");
         } catch (ApiRequestException e) {
             throw e;
         }

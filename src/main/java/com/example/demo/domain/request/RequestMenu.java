@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RequestMenu {
     private int userID;
-    private String userName;
     private int scheduleID;
     private String dishName;
     private double price;
+    private int quantity;
     private String serveDate;
 
     public void serveDate(LocalDateTime serveDate) {

@@ -19,6 +19,7 @@ public class ResponseOrder {
     private double totalPrice;
     private String createdAt;
     private String updatedAt;
+    private int isConfirm;
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = DateTimeUtil.formatLocalDateTime(createdAt);

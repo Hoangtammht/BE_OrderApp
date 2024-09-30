@@ -16,6 +16,7 @@ public class ResponseMenu {
     private int scheduleID;
     private String dishName;
     private double price;
+    private int quantity;
     private String serveDate;
 
     public void serveDate(LocalDateTime serveDate) {

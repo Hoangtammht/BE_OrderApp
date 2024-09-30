@@ -12,4 +12,5 @@ public interface MenuMapper {
     void addDishToMenu(RequestMenu requestMenu);
     List<ResponseMenu> getMenuByDate(LocalDate serveDate);
     ResponseMenu getMenuByID(int menuID);
+    void updateQuantityOfMenu(int menuID, int quantity);
 }

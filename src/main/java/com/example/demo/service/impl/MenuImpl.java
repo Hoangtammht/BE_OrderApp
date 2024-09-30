@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +31,8 @@ public class MenuImpl implements MenuService {
 
     @Override
     public void addDishToMenu(RequestMenu requestMenu) {
-        User user = userMapper.findUserByUserName(requestMenu.getUserName());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userMapper.findUserByUserName(authentication.getName());
         requestMenu.setUserID(user.getUserID());
         menuMapper.addDishToMenu(requestMenu);
     }

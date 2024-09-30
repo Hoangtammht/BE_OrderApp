@@ -6,8 +6,8 @@
 <mapper namespace="com.example.demo.dao.MenuMapper">
 
     <insert id="addDishToMenu" parameterType="com.example.demo.domain.request.RequestMenu" >
-        INSERT INTO Menu (userID, scheduleID, dishName, price, serveDate)
-        VALUES (#{userID}, #{scheduleID}, #{dishName}, #{price}, #{serveDate})
+        INSERT INTO Menu (userID, scheduleID, dishName, price, quantity, serveDate)
+        VALUES (#{userID}, #{scheduleID}, #{dishName}, #{price}, #{quantity}, #{serveDate})
     </insert>
 
 
@@ -18,6 +18,7 @@
             scheduleID,
             dishName,
             price,
+            quantity,
             serveDate
         FROM Menu
             WHERE serveDate = #{serveDate}
@@ -30,9 +31,16 @@
             scheduleID,
             dishName,
             price,
+            quantity,
             serveDate
         FROM Menu
         WHERE menuID = #{menuID}
     </select>
+
+    <update id="updateQuantityOfMenu" parameterType="com.example.demo.domain.response.ResponseMenu">
+        UPDATE Menu
+        SET quantity = #{quantity}
+        WHERE menuID = #{menuID}
+    </update>
 
 </mapper>

@@ -12,16 +12,17 @@
 
     <select id="getOrdersByDateRange" resultType="com.example.demo.domain.response.ResponseOrder">
         SELECT
-            orderID,
-            U.userName,
-            M.dishName,
-            S.className,
-            quantity,
-            totalPrice,
-            O.createdAt,
-            O.updatedAt
+        orderID,
+        U.userName,
+        M.dishName,
+        S.className,
+        O.quantity,
+        totalPrice,
+        isConfirm,
+        O.createdAt,
+        O.updatedAt
         FROM `Order` O, Menu M, User U, Class S
-            WHERE
+        WHERE
         O.userID = u.userID AND O.classID = S.classID AND O.menuID = M.menuID
         AND DATE(O.createdAt) BETWEEN #{from} AND #{to}
     </select>
@@ -32,7 +33,8 @@
         U.userName,
         M.dishName,
         S.className,
-        quantity,
+        O.quantity,
+        isConfirm,
         totalPrice,
         O.createdAt,
         O.updatedAt
@@ -49,6 +51,12 @@
         ORDER BY
         O.orderID DESC
     </select>
+
+    <update id="confirmOrder" parameterType="com.example.demo.domain.response.ResponseOrder">
+        UPDATE `Order`
+        SET isConfirm = #{isConfirm}
+        WHERE orderID = #{orderID}
+    </update>
 
 
 </mapper>
