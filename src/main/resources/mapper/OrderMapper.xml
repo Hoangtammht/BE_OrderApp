@@ -23,7 +23,7 @@
         O.updatedAt
         FROM `Order` O, Menu M, User U, Class S
         WHERE
-        O.userID = u.userID AND O.classID = S.classID AND O.menuID = M.menuID
+        O.userID = U.userID AND O.classID = S.classID AND O.menuID = M.menuID
         AND DATE(O.createdAt) BETWEEN #{from} AND #{to}
     </select>
 
