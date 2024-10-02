@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.request.RequestEditOrder;
 import com.example.demo.domain.request.RequestOrder;
 import com.example.demo.domain.request.RequestUpdateConfirm;
 import com.example.demo.domain.response.ResponseOrder;
@@ -26,6 +27,16 @@ public class OrderController {
         try {
             orderService.createOrder(requestOrder);
             return ResponseEntity.ok().body("Order created successfully");
+        } catch (ApiRequestException e) {
+            throw e;
+        }
+    }
+
+    @PutMapping("/editOrder")
+    public ResponseEntity<?> editOrder(@RequestBody RequestEditOrder requestEditOrder) {
+        try {
+            orderService.editOrder(requestEditOrder);
+            return ResponseEntity.ok().body("Order edited successfully");
         } catch (ApiRequestException e) {
             throw e;
         }

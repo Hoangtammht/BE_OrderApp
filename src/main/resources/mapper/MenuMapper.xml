@@ -15,13 +15,14 @@
         SELECT
             menuID,
             userID,
-            scheduleID,
+            M.scheduleID,
+            scheduleName,
             dishName,
             price,
             quantity,
             serveDate
-        FROM Menu
-            WHERE serveDate = #{serveDate}
+        FROM Menu M, Schedule S
+            WHERE  M.scheduleID = S.scheduleID AND serveDate = #{serveDate}
     </select>
 
     <select id="getMenuByID" resultType="com.example.demo.domain.response.ResponseMenu">

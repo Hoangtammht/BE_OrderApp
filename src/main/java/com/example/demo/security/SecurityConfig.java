@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/menu/addDishToMenu").hasAnyAuthority("Chef");
         http.authorizeRequests().antMatchers(POST, "/menu/getMenuByDate").hasAnyAuthority("Teacher");
         http.authorizeRequests().antMatchers(POST, "/order/createOrder").hasAnyAuthority("Teacher");
+        http.authorizeRequests().antMatchers(POST, "/order/editOrder").hasAnyAuthority("Teacher");
         http.authorizeRequests().antMatchers(GET, "/order/getListOrdersByDate").hasAnyAuthority("Accountant", "Chef");
         http.authorizeRequests().antMatchers(GET, "/order/getOrderByTeacherName").hasAnyAuthority("Accountant", "Teacher", "Chef");
         http.authorizeRequests().antMatchers(PUT, "/order/confirmOrder").hasAnyAuthority("Accountant");

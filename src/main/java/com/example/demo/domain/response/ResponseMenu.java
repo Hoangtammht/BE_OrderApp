@@ -14,6 +14,7 @@ public class ResponseMenu {
     private int menuID;
     private int userID;
     private int scheduleID;
+    private String scheduleName;
     private String dishName;
     private double price;
     private int quantity;

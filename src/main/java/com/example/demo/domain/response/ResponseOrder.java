@@ -13,10 +13,12 @@ import java.time.LocalDateTime;
 public class ResponseOrder {
     private int orderID;
     private String userName;
+    private int menuID;
     private String dishName;
     private String className;
     private int quantity;
     private double totalPrice;
+    private String scheduleName;
     private String createdAt;
     private String updatedAt;
     private int isConfirm;

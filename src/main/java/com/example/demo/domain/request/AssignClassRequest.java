@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AssignClassRequest {
-    private int userID;
-    private int roleID;
+    private String userName;
     private int classID;
 
 }

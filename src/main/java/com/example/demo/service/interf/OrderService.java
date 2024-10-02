@@ -1,5 +1,6 @@
 package com.example.demo.service.interf;
 
+import com.example.demo.domain.request.RequestEditOrder;
 import com.example.demo.domain.request.RequestOrder;
 import com.example.demo.domain.request.RequestUpdateConfirm;
 import com.example.demo.domain.response.ResponseOrder;
@@ -13,5 +14,7 @@ public interface OrderService {
     List<ResponseOrder> getOrdersByTeacher();
 
     void confirmOrder(RequestUpdateConfirm requestUpdateConfirm);
+    void editOrder(RequestEditOrder requestEditOrder);
+
 
 }
