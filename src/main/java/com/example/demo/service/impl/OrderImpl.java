@@ -38,7 +38,7 @@ public class OrderImpl implements OrderService {
     @Override
     public void createOrder(RequestOrder requestOrder) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        try{
+        try {
             ResponseMenu dishName = menuMapper.getMenuByID(requestOrder.getMenuID());
             if (dishName.getQuantity() < requestOrder.getQuantity()) {
                 throw new ApiRequestException("Món ăn không còn đủ số lượng để cung cấp.");
@@ -57,7 +57,7 @@ public class OrderImpl implements OrderService {
             orderMapper.createOrder(requestOrder);
             int updatedQuantity = dishName.getQuantity() - requestOrder.getQuantity();
             menuMapper.updateQuantityOfMenu(requestOrder.getMenuID(), updatedQuantity);
-        }catch (ApiRequestException e){
+        } catch (ApiRequestException e) {
             throw e;
         }
     }
@@ -75,7 +75,20 @@ public class OrderImpl implements OrderService {
 
     @Override
     public void confirmOrder(RequestUpdateConfirm requestUpdateConfirm) {
-        orderMapper.confirmOrder(requestUpdateConfirm);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            if (requestUpdateConfirm.getIsConfirm() == 2) {
+                ResponseOrder order = orderMapper.getOrdersByOrderID(requestUpdateConfirm.getOrderID());
+                ResponseMenu menu = menuMapper.getMenuByID(order.getMenuID());
+                int updatedQuantity = menu.getQuantity() + order.getQuantity();
+                menuMapper.updateQuantityOfMenu(order.getMenuID(), updatedQuantity);
+                orderMapper.confirmOrder(requestUpdateConfirm);
+            } else {
+                orderMapper.confirmOrder(requestUpdateConfirm);
+            }
+        } catch (ApiRequestException e) {
+            throw e;
+        }
     }
 
     @Override

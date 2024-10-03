@@ -22,6 +22,7 @@ public class ResponseOrder {
     private String createdAt;
     private String updatedAt;
     private int isConfirm;
+    private String feedback;
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = DateTimeUtil.formatLocalDateTime(createdAt);

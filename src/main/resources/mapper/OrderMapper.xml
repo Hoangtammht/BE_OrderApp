@@ -20,6 +20,7 @@
         SD.scheduleName,
         totalPrice,
         isConfirm,
+        feedback,
         O.createdAt,
         O.updatedAt
         FROM `Order` O, Menu M, User U, Class S, Schedule SD
@@ -38,6 +39,7 @@
         SD.scheduleName,
         totalPrice,
         isConfirm,
+        feedback,
         O.createdAt,
         O.updatedAt
         FROM `Order` O, Menu M, User U, Class S, Schedule SD
@@ -58,6 +60,7 @@
         SD.scheduleName,
         totalPrice,
         isConfirm,
+        feedback,
         O.createdAt,
         O.updatedAt
         FROM `Order` O, Menu M, User U, Class S, Schedule SD
@@ -68,7 +71,9 @@
 
     <update id="confirmOrder" parameterType="com.example.demo.domain.response.ResponseOrder">
         UPDATE `Order`
-        SET isConfirm = #{isConfirm}
+        SET
+        isConfirm = #{isConfirm},
+        feedback = #{feedback}
         WHERE orderID = #{orderID}
     </update>
 

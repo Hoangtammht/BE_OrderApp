@@ -11,5 +11,6 @@ public class RequestUpdateConfirm {
 
     private int orderID;
     private int isConfirm;
+    private String feedback;
 
 }
