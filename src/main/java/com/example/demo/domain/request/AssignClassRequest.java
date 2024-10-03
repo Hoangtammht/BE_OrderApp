@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class AssignClassRequest {
     private String userName;
     private int classID;
-
 }

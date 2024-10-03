@@ -14,6 +14,7 @@
         SELECT
         orderID,
         U.userName,
+        U.fullName,
         M.dishName,
         S.className,
         O.quantity,
@@ -26,13 +27,14 @@
         FROM `Order` O, Menu M, User U, Class S, Schedule SD
         WHERE
         O.userID = U.userID AND O.classID = S.classID AND O.menuID = M.menuID AND M.scheduleID = SD.scheduleID
-        AND DATE(O.createdAt) BETWEEN #{from} AND #{to}
+        AND DATE(O.createdAt) BETWEEN #{from} AND #{to} ORDER BY orderID DESC
     </select>
 
     <select id="getOrdersByTeacher" resultType="com.example.demo.domain.response.ResponseOrder">
         SELECT
         orderID,
         U.userName,
+        U.fullName,
         M.dishName,
         S.className,
         O.quantity,
@@ -54,6 +56,7 @@
         orderID,
         M.menuID,
         U.userName,
+        U.fullName,
         M.dishName,
         S.className,
         O.quantity,

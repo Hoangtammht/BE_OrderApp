@@ -13,8 +13,10 @@ public interface ClassMapper {
 
     AssignClassResponse getInformationClassByClassID(int classID);
 
-    void assignClass(int classID, int userID);
+    void assignClass(int userID, int classID);
 
     Class getClassByUserID(int userID);
+
+    void clearUserIDFromClass(int classID);
 
 }

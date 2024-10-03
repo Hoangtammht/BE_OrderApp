@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class ResponseOrder {
     private int orderID;
     private String userName;
+    private String fullName;
     private int menuID;
     private String dishName;
     private String className;

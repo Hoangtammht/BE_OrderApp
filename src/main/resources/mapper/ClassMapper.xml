@@ -47,5 +47,11 @@
         WHERE classID = #{classID}
     </update>
 
+    <update id="clearUserIDFromClass" parameterType="int">
+        UPDATE Class
+        SET userID = NULL
+        WHERE classID = #{classID}
+    </update>
+
 
 </mapper>
