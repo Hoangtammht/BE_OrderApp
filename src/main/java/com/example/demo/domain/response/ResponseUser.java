@@ -15,6 +15,7 @@ public class ResponseUser {
     private String password;
     private String fullName;
     private int roleID;
+    private String className;
     private String roleName;
     private String createdAt;
     private String updatedAt;

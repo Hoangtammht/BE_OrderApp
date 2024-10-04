@@ -1,22 +1,18 @@
-package com.example.demo.domain;
+package com.example.demo.domain.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class RequestEditAccount {
     private int userID;
     private String userName;
     private String password;
     private String fullName;
     private int roleID;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private int status;
+    private String updatedAt;
 
 }

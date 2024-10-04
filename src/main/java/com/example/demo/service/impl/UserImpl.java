@@ -4,6 +4,7 @@ import com.example.demo.dao.UserMapper;
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserRole;
 import com.example.demo.domain.request.RequestAccount;
+import com.example.demo.domain.request.RequestEditAccount;
 import com.example.demo.domain.response.ResponseUser;
 import com.example.demo.exception.ApiRequestException;
 import com.example.demo.service.interf.RoleService;
@@ -37,10 +38,10 @@ public class UserImpl implements UserDetailsService, UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.findUserByUserName(username);
-        if(user == null){
+        if (user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
-        }else{
+        } else {
             log.info("User found in the database: {}", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -52,7 +53,15 @@ public class UserImpl implements UserDetailsService, UserService {
 
     @Override
     public User findUserByUserName(String userName) {
-        return userMapper.findUserByUserName(userName);
+        try{
+            User user =  userMapper.findUserByUserName(userName);
+            if(user.getStatus() == 1){
+                throw new ApiRequestException("Tài khoản của bạn đã bị block");
+            }
+            return user;
+        }catch (ApiRequestException e){
+            throw e;
+        }
     }
 
     @Override
@@ -62,19 +71,36 @@ public class UserImpl implements UserDetailsService, UserService {
 
     @Override
     public void createAccount(RequestAccount user) throws Exception {
-        if(userMapper.findUserByUserName(user.getUserName()) == null) {
+        if (userMapper.findUserByUserName(user.getUserName()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setCreatedAt(String.valueOf(LocalDateTime.now()));
-        }else{
+            userMapper.createAccount(user);
+        } else {
             throw new ApiRequestException("Username " + user.getUserName() + " already exists.");
         }
-        userMapper.createAccount(user);
     }
 
     @Override
-    public List<User> getListUserByRole(int roleID) {
+    public List<ResponseUser> getListUserByRole(int roleID) {
         return userMapper.getListUserByRole(roleID);
     }
 
+    @Override
+    public void editAccount(RequestEditAccount requestEditAccount) {
+        try {
+            User user = userMapper.findUserByUserName(requestEditAccount.getUserName());
+            requestEditAccount.setUserID(user.getUserID());
+            requestEditAccount.setPassword(passwordEncoder.encode(requestEditAccount.getPassword()));
+            requestEditAccount.setUpdatedAt(String.valueOf(LocalDateTime.now()));
+            userMapper.editAccount(requestEditAccount);
+        } catch (ApiRequestException e) {
+            throw e;
+        }
+    }
 
+    @Override
+    public void deleteAccount(String userName) {
+        User user = userMapper.findUserByUserName(userName);
+        userMapper.deleteAccount(user.getUserID());
+    }
 }

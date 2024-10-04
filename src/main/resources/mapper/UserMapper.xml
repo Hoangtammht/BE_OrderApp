@@ -12,7 +12,8 @@
             fullName,
             roleID,
             createdAt,
-            updatedAt
+            updatedAt,
+            status
     FROM User WHERE userName = #{userName}
     </select>
 
@@ -34,14 +35,41 @@
         VALUES (#{userName}, #{password}, #{fullName}, #{roleID}, #{createdAt})
     </insert>
 
-    <select id="getListUserByRole" resultType="com.example.demo.domain.User">
-        SELECT  userID,
+    <select id="getListUserByRole" resultType="com.example.demo.domain.response.ResponseUser">
+        SELECT
+        U.userID,
         userName,
         password,
         fullName,
+        className,
         roleID,
-        createdAt,
-        updatedAt
-        FROM User WHERE roleID = #{roleID}
+        U.createdAt,
+        U.updatedAt
+        FROM User U LEFT JOIN Class S ON
+        U.userID = S.userID
+        WHERE
+        roleID = #{roleID} AND U.status = 0
     </select>
+
+    <update id="editAccount" parameterType="com.example.demo.domain.request.RequestEditAccount">
+        UPDATE User
+        SET
+        userName = #{userName},
+        password = #{password},
+        fullName = #{fullName},
+        roleID = #{roleID},
+        updatedAt = #{updatedAt}
+        WHERE userID = #{userID}
+    </update>
+
+    <update id="deleteAccount" parameterType="com.example.demo.domain.request.RequestEditAccount">
+        UPDATE User
+        SET
+        status = 1
+        WHERE userID = #{userID}
+    </update>
+
+
+
+
 </mapper>
