@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.request.RequestEditPriceMenu;
 import com.example.demo.domain.request.RequestMenu;
 import com.example.demo.domain.response.ResponseMenu;
 import com.example.demo.exception.ApiRequestException;
@@ -39,6 +40,26 @@ public class MenuController {
             return ResponseEntity.ok().body(menuList);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/getListMenuForAccountant")
+    public ResponseEntity<List<ResponseMenu>> getListMenuForAccountant(){
+        try {
+            List<ResponseMenu> menuList = menuService.getListMenuForAccountant();
+            return ResponseEntity.ok().body(menuList);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PutMapping("/updatePriceOfDish")
+    public ResponseEntity<?> updatePriceOfDish(@RequestBody RequestEditPriceMenu requestEditPriceMenu){
+        try {
+            menuService.updatePriceOfDish(requestEditPriceMenu);
+            return ResponseEntity.ok().body("Edit price of menu");
+        }catch (ApiRequestException e){
+            throw e;
         }
     }
 

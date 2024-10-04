@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestOrder {
-    private int userID;
+public class RequestEditPriceMenu {
     private int menuID;
-    private int classID;
-    private int quantity;
-    private String createdAt;
-}
+    private double price;
 
+}

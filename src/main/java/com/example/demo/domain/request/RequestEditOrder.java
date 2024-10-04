@@ -13,6 +13,5 @@ public class RequestEditOrder {
     private int menuID;
     private int classID;
     private int quantity;
-    private double totalPrice;
     private String updatedAt;
 }

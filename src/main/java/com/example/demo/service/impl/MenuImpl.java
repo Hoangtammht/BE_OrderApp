@@ -3,8 +3,10 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.MenuMapper;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.domain.User;
+import com.example.demo.domain.request.RequestEditPriceMenu;
 import com.example.demo.domain.request.RequestMenu;
 import com.example.demo.domain.response.ResponseMenu;
+import com.example.demo.exception.ApiRequestException;
 import com.example.demo.service.interf.MenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +42,19 @@ public class MenuImpl implements MenuService {
     @Override
     public List<ResponseMenu> getMenuByDate(LocalDate serveDate) {
         return menuMapper.getMenuByDate(serveDate);
+    }
+
+    @Override
+    public List<ResponseMenu> getListMenuForAccountant() {
+        return menuMapper.getListMenuForAccountant();
+    }
+
+    @Override
+    public void updatePriceOfDish(RequestEditPriceMenu requestEditPriceMenu) {
+        try {
+            menuMapper.updatePriceOfDish(requestEditPriceMenu);
+        }catch (ApiRequestException e){
+            throw e;
+        }
     }
 }

@@ -6,8 +6,8 @@
 <mapper namespace="com.example.demo.dao.OrderMapper">
 
     <insert id="createOrder" keyProperty="orderID" parameterType="com.example.demo.domain.request.RequestOrder">
-        INSERT INTO `Order` (userID, menuID, classID, quantity, totalPrice, createdAt)
-        VALUES (#{userID}, #{menuID}, #{classID}, #{quantity}, #{totalPrice}, #{createdAt})
+        INSERT INTO `Order` (userID, menuID, classID, quantity, createdAt)
+        VALUES (#{userID}, #{menuID}, #{classID}, #{quantity}, #{createdAt})
     </insert>
 
     <select id="getOrdersByDateRange" resultType="com.example.demo.domain.response.ResponseOrder">
@@ -19,6 +19,7 @@
         S.className,
         O.quantity,
         SD.scheduleName,
+        M.price,
         totalPrice,
         isConfirm,
         feedback,
@@ -80,6 +81,13 @@
         WHERE orderID = #{orderID}
     </update>
 
+    <update id="updateTotalPrice" parameterType="com.example.demo.domain.response.ResponseOrder">
+        UPDATE `Order`
+        SET
+        totalPrice = #{totalPrice}
+        WHERE orderID = #{orderID}
+    </update>
+
     <update id="editOrder" parameterType="com.example.demo.domain.response.ResponseOrder">
         UPDATE `Order`
         SET
@@ -87,7 +95,6 @@
         menuID = #{menuID},
         classID = #{classID},
         quantity = #{quantity},
-        totalPrice = #{totalPrice},
         updatedAt = #{updatedAt}
         WHERE orderID = #{orderID}
     </update>

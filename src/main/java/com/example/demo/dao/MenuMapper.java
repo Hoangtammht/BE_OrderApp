@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.request.RequestEditPriceMenu;
 import com.example.demo.domain.request.RequestMenu;
 import com.example.demo.domain.response.ResponseMenu;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,7 @@ public interface MenuMapper {
     List<ResponseMenu> getMenuByDate(LocalDate serveDate);
     ResponseMenu getMenuByID(int menuID);
     void updateQuantityOfMenu(int menuID, int quantity);
+    List<ResponseMenu> getListMenuForAccountant();
+    void updatePriceOfDish(RequestEditPriceMenu requestEditPriceMenu);
+
 }

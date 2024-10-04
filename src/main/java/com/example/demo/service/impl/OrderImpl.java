@@ -53,7 +53,7 @@ public class OrderImpl implements OrderService {
             }
             requestOrder.setUserID(user.getUserID());
             requestOrder.setClassID(classInfo.getClassID());
-            requestOrder.setTotalPrice(dishName.getPrice() * requestOrder.getQuantity());
+//            requestOrder.setTotalPrice(dishName.getPrice() * requestOrder.getQuantity());
             orderMapper.createOrder(requestOrder);
             int updatedQuantity = dishName.getQuantity() - requestOrder.getQuantity();
             menuMapper.updateQuantityOfMenu(requestOrder.getMenuID(), updatedQuantity);
@@ -83,6 +83,12 @@ public class OrderImpl implements OrderService {
                 int updatedQuantity = menu.getQuantity() + order.getQuantity();
                 menuMapper.updateQuantityOfMenu(order.getMenuID(), updatedQuantity);
                 orderMapper.confirmOrder(requestUpdateConfirm);
+            } else if(requestUpdateConfirm.getIsConfirm() == 1){
+                ResponseOrder order = orderMapper.getOrdersByOrderID(requestUpdateConfirm.getOrderID());
+                ResponseMenu menu = menuMapper.getMenuByID(order.getMenuID());
+                double totalPrice = menu.getPrice() * order.getQuantity();
+                orderMapper.updateTotalPrice(requestUpdateConfirm.getOrderID(), totalPrice);
+                orderMapper.confirmOrder(requestUpdateConfirm);
             } else {
                 orderMapper.confirmOrder(requestUpdateConfirm);
             }
@@ -110,7 +116,7 @@ public class OrderImpl implements OrderService {
                 Class classInfo = classMapper.getClassByUserID(user.getUserID());
                 requestEditOrder.setUserID(user.getUserID());
                 requestEditOrder.setClassID(classInfo.getClassID());
-                requestEditOrder.setTotalPrice(newDish.getPrice() * requestEditOrder.getQuantity());
+//                requestEditOrder.setTotalPrice(newDish.getPrice() * requestEditOrder.getQuantity());
                 int updatedQuantity = currentNewQuantity - quantityChange;
                 menuMapper.updateQuantityOfMenu(requestEditOrder.getMenuID(), updatedQuantity);
                 orderMapper.editOrder(requestEditOrder);
@@ -124,7 +130,7 @@ public class OrderImpl implements OrderService {
                 Class classInfo = classMapper.getClassByUserID(user.getUserID());
                 requestEditOrder.setUserID(user.getUserID());
                 requestEditOrder.setClassID(classInfo.getClassID());
-                requestEditOrder.setTotalPrice(newDish.getPrice() * requestEditOrder.getQuantity());
+//                requestEditOrder.setTotalPrice(newDish.getPrice() * requestEditOrder.getQuantity());
                 int editQuantity = currentNewQuantity - requestEditOrder.getQuantity();
                 menuMapper.updateQuantityOfMenu(requestEditOrder.getMenuID(), editQuantity);
                 orderMapper.editOrder(requestEditOrder);

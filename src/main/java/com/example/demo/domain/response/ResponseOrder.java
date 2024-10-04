@@ -17,6 +17,7 @@ public class ResponseOrder {
     private int menuID;
     private String dishName;
     private String className;
+    private double price;
     private int quantity;
     private double totalPrice;
     private String scheduleName;

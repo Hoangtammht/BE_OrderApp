@@ -22,4 +22,6 @@ public interface OrderMapper {
 
     void editOrder(RequestEditOrder requestEditOrder);
 
+    void updateTotalPrice(int orderID, double totalPrice);
+
 }

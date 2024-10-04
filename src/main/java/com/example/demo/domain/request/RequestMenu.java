@@ -14,7 +14,6 @@ public class RequestMenu {
     private int userID;
     private int scheduleID;
     private String dishName;
-    private double price;
     private int quantity;
     private String serveDate;
 
