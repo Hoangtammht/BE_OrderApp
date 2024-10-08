@@ -55,7 +55,10 @@ public class UserImpl implements UserDetailsService, UserService {
     public User findUserByUserName(String userName) {
         try{
             User user =  userMapper.findUserByUserName(userName);
-            if(user.getStatus() == 1){
+            if (user == null) {
+                throw new ApiRequestException("Tài khoản hoặc mật khẩu không chính xác");
+            }
+            if (user.getStatus() == 1) {
                 throw new ApiRequestException("Tài khoản của bạn đã bị block");
             }
             return user;

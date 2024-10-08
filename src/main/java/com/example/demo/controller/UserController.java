@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,12 +52,15 @@ public class UserController {
                           HttpServletResponse response,
                           HttpServletRequest request) throws IOException {
         try {
+            User user = userService.findUserByUserName(loginUser.getUserName());
+            if (user.getStatus() == 1) {
+                throw new ApiRequestException("Tài khoản của bạn đã bị block");
+            }
             Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginUser.getUserName(), loginUser.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String name = authentication.getName();
-            User user = userService.findUserByUserName(name);
             UserRole userRole = roleService.findRoleByUserName(user.getUserName());
             String access_token = JWT.create()
                     .withSubject(user.getUserName())
@@ -79,15 +83,23 @@ public class UserController {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
             new ObjectMapper().writeValue(response.getOutputStream(), error);
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (BadCredentialsException e) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             Map<String, String> error = new HashMap<>();
             error.put("error_message", "Tài khoản hoặc mật khẩu không chính xác");
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
             new ObjectMapper().writeValue(response.getOutputStream(), error);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", e.getMessage());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("UTF-8");
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
         }
     }
+
 
 
     @PostMapping("/registerUser")
