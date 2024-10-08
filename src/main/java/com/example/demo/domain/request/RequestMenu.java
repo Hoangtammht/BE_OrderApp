@@ -17,9 +17,5 @@ public class RequestMenu {
     private int quantity;
     private String serveDate;
 
-    public void serveDate(LocalDateTime serveDate) {
-        this.serveDate = DateTimeUtil.formatLocalDateTime(serveDate);
-    }
-
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.service.interf;
 import com.example.demo.domain.request.RequestEditPriceMenu;
 import com.example.demo.domain.request.RequestMenu;
 import com.example.demo.domain.response.ResponseMenu;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,5 +17,7 @@ public interface MenuService {
     List<ResponseMenu> getListMenuForAccountant();
 
     void updatePriceOfDish(RequestEditPriceMenu requestEditPriceMenu);
+
+    void importDishesFromExcel(MultipartFile file) throws Exception;
 
 }

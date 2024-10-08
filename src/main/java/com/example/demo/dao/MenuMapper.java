@@ -17,4 +17,8 @@ public interface MenuMapper {
     List<ResponseMenu> getListMenuForAccountant();
     void updatePriceOfDish(RequestEditPriceMenu requestEditPriceMenu);
 
+    Integer checkDishInMenu(RequestMenu requestMenu);
+
+    void updateDishQuantityInMenu(RequestMenu requestMenu);
+
 }

@@ -65,4 +65,22 @@
         WHERE menuID = #{menuID}
     </update>
 
+    <select id="checkDishInMenu" parameterType="com.example.demo.domain.request.RequestMenu" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM Menu
+        WHERE userID = #{userID}
+        AND scheduleID = #{scheduleID}
+        AND LOWER(dishName) = LOWER(#{dishName})
+        AND serveDate = #{serveDate}
+    </select>
+
+    <update id="updateDishQuantityInMenu" parameterType="com.example.demo.domain.request.RequestMenu">
+        UPDATE Menu
+        SET quantity = quantity + #{quantity}
+        WHERE userID = #{userID}
+        AND scheduleID = #{scheduleID}
+        AND LOWER(dishName) = LOWER(#{dishName})
+        AND serveDate = #{serveDate}
+    </update>
+
 </mapper>
