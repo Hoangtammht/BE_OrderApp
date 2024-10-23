@@ -18,8 +18,10 @@ public class ScheduleImpl implements ScheduleService {
 
     @Override
     public List<Schedule> getListSchedule() {
-        return scheduleMapper.getListSchedule();
+        log.info("Đang lấy danh sách lịch trình từ cơ sở dữ liệu");
+        List<Schedule> schedules = scheduleMapper.getListSchedule();
+        log.info("Số lượng lịch trình nhận được: {}", schedules.size());
+        return schedules;
     }
-
 
 }

@@ -11,6 +11,7 @@ public interface UserService {
 
     User findUserByUserName(String userName);
 
+
     ResponseUser findResponseUserByUserName(String userName);
 
     void createAccount(RequestAccount user) throws Exception;
@@ -20,5 +21,10 @@ public interface UserService {
     void editAccount(RequestEditAccount user);
 
     void deleteAccount(String userName);
+
+    void saveRefreshToken(int userID, String refresh_token);
+    boolean isRefreshTokenValid(int userID, String refresh_token);
+
+    void deleteRefreshToken(int userID, String refreshToken);
 
 }

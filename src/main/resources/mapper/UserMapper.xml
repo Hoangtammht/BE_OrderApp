@@ -69,6 +69,26 @@
         WHERE userID = #{userID}
     </update>
 
+    <insert id="saveRefreshToken" >
+        INSERT INTO UserToken (userID, refreshToken)
+        VALUES (#{userID}, #{refreshToken})
+    </insert>
+
+    <select id="isRefreshTokenValid" resultType="java.lang.Boolean">
+        SELECT
+        tokenID,
+        userID,
+        refreshToken,
+        createdAt,
+        updatedAt FROM UserToken
+        WHERE
+        userID = #{userID} AND refreshToken = #{refreshToken}
+    </select>
+
+    <delete id="deleteRefreshToken">
+        DELETE FROM UserToken
+        WHERE userID = #{userID} AND refreshToken = #{refreshToken}
+    </delete>
 
 
 

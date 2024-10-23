@@ -18,4 +18,10 @@ public interface UserMapper {
 
     void deleteAccount(int userID);
 
+    void saveRefreshToken(int userID, String refreshToken);
+
+    boolean isRefreshTokenValid(int userID, String refreshToken);
+
+    void deleteRefreshToken(int userID, String refreshToken);
+
 }

@@ -18,11 +18,13 @@ public class RoleImpl implements RoleService {
 
     @Override
     public UserRole findRoleByUserName(String phoneNumber) {
+        log.info("Đang tìm role theo số điện thoại: {}", phoneNumber);
         return roleMapper.findRoleByUserName(phoneNumber);
     }
 
     @Override
     public List<Role> getAllRoles() {
+        log.info("Đang lấy tất cả role");
         return roleMapper.getAllRoles();
     }
 }
